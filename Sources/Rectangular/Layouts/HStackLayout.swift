@@ -50,12 +50,12 @@ public struct HStackLayout: Layout {
         let pairs: [IndexedItem] = items.enumerated().map { ($0, $1) }
         let totalGapSpacing = !pairs.isEmpty ? spacing * Double(pairs.count - 1) : .zero
         var availableWidth = size.width - totalGapSpacing
-        var sizeTable: [Priority: SizedItem] = [:]
-        let priorityGroup = Dictionary(grouping: pairs, by: \.item.priority)
-        for index in priorityGroup.indices.sorted(by: <) {
-            let group = priorityGroup[index]
+        var sizeTable: [Int: SizedItem] = [:]
+        let priorityGroups: [Priority: [IndexedItem]] = Dictionary(grouping: pairs, by: \.item.priority)
+        for index in priorityGroups.keys.sorted(by: >) {
+            let group = priorityGroups[index]!
             let availableSize = Size(width: availableWidth, height: size.height)
-            let (groupSizeTable, remainingWidth) = fittingSizes(for: group.value, within: availableSize)
+            let (groupSizeTable, remainingWidth) = fittingSizes(for: group, within: availableSize)
             sizeTable.merge(groupSizeTable) { current, new in current } // No duplicate values are expected.
             availableWidth = remainingWidth
         }
