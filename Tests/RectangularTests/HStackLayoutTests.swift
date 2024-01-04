@@ -99,7 +99,7 @@ final class HStackLayoutTests: XCTestCase {
         let item1 = FixedItem()
         let item2 = FixedItem()
         let bounds = Rectangle(origin: .zero, size: .square(100))
-        let layout = HStackLayout(spacing: 10, alignment: .center)
+        let layout = HStackLayout(spacing: 10)
         let frames = layout.frames(for: [item1, item2], within: bounds)
 
         XCTAssertEqual(frames.first!.x, 0)

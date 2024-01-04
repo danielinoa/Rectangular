@@ -8,8 +8,13 @@ public struct HStackLayout: Layout {
     private typealias SizedItem = (size: Size, item: any LayoutItem)
     private typealias IndexedItem = (index: Int, item: any LayoutItem)
 
-    public var spacing: Double = .zero
-    public var alignment: VerticalAlignment = .center
+    public var spacing: Double
+    public var alignment: VerticalAlignment
+
+    public init(alignment: VerticalAlignment = .center, spacing: Double = .zero) {
+        self.alignment = alignment
+        self.spacing = spacing
+    }
 
     public func sizeThatFits(items: [any LayoutItem]) -> Size {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
