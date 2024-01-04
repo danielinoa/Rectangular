@@ -19,16 +19,6 @@ public struct HStackLayout: Layout {
         return .init(width: totalWidth, height: maxHeight)
     }
 
-//    public func sizeThatFits(items: [any LayoutItem], within size: Size) -> Size {
-//        let totalInteritemSpacing = totalInteritemSpacing(for: items)
-//        let itemSizePairs = sizes(for: items, within: size)
-//        let itemsWidth = itemSizePairs.map(\.size.width).reduce(.zero, +)
-//        let totalWidth = itemsWidth + totalInteritemSpacing
-//        let maxHeight = itemSizePairs.map(\.size.height).max() ?? .zero
-//        let size = Size(width: totalWidth, height: maxHeight)
-//        return size
-//    }
-
     public func sizeThatFits(items: [any LayoutItem], within size: Size) -> Size {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
         let itemsMaxWidth = items.map { $0.sizeThatFits(size).width }.reduce(.zero, +)
@@ -110,25 +100,3 @@ public struct HStackLayout: Layout {
         !items.isEmpty ? spacing * Double(items.count - 1) : .zero
     }
 }
-
-//@dynamicMemberLookup
-//struct Indexed<Index, Value> {
-//
-//    let index: Index
-//    let value: Value
-//
-//    subscript<T>(dynamicMember keyPath: KeyPath<Value, T>) -> T {
-//        return value[keyPath: keyPath]
-//    }
-//}
-//
-//extension Indexed: Equatable & Hashable where Index: Equatable & Hashable, Value: Hashable {}
-
-//struct IdentifiedRectangle {
-//    private final class Identifier {}
-//    let identifier: ObjectIdentifier = .init(Identifier())
-//    let rectangle: Rectangle
-//    init(_ rectangle: Rectangle) {
-//        self.rectangle = rectangle
-//    }
-//}
