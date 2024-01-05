@@ -2,6 +2,7 @@
 //  Created by Daniel Inoa on 12/30/23.
 //
 
+/// A layout that arranges its items along the horizontal axis.
 public struct HStackLayout: Layout {
 
     private typealias Priority = Int
