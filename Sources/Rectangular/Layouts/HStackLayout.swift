@@ -48,8 +48,7 @@ public struct HStackLayout: Layout {
 
     private func sizes(for items: [any LayoutItem], within size: Size) -> [SizedItem] {
         let pairs: [IndexedItem] = items.enumerated().map { ($0, $1) }
-        let totalGapSpacing = !pairs.isEmpty ? spacing * Double(pairs.count - 1) : .zero
-        var availableWidth = size.width - totalGapSpacing
+        var availableWidth = size.width - totalInteritemSpacing(for: items)
         var sizeTable: [Int: SizedItem] = [:]
         let priorityGroups: [Priority: [IndexedItem]] = Dictionary(grouping: pairs, by: \.item.priority)
         for index in priorityGroups.keys.sorted(by: >) {
