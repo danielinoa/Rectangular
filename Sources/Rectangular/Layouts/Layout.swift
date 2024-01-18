@@ -2,7 +2,7 @@
 //  Created by Daniel Inoa on 1/2/24.
 //
 
-protocol Layout {
+public protocol Layout {
 
     /// Returns the minimum size needed to fit the layout-items.
     /// - note: This function utilizes the items' intrinsic size to calculate the resulting size.
