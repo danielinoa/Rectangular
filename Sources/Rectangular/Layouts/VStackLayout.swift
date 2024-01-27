@@ -2,6 +2,8 @@
 //  Created by Daniel Inoa on 1/4/24.
 //
 
+import SwiftPlus
+
 /// A layout that arranges its items along the vertical axis.
 public struct VStackLayout: Layout {
 
@@ -28,8 +30,8 @@ public struct VStackLayout: Layout {
     public func sizeThatFits(items: [any LayoutItem], within size: Size) -> Size {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
         let itemsMaxHeight = items.map { $0.sizeThatFits(size).height }.reduce(.zero, +)
-        let fittingHeight = min((itemsMaxHeight + totalInteritemSpacing), size.height)
         let fittingWidth = items.map { $0.sizeThatFits(size).width }.max() ?? .zero
+        let fittingHeight = (itemsMaxHeight + totalInteritemSpacing).clamped(upTo: size.height)
         let size = Size(width: fittingWidth, height: fittingHeight)
         return size
     }
