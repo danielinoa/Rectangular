@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftplus",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danielinoa/SwiftPlus.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e6031c7a6c6e3ee6f3444e96bfd76119f8141d03"
+      }
+    }
+  ],
+  "version" : 2
+}
