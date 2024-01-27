@@ -11,7 +11,7 @@ public struct ZStackLayout: Layout {
 
     public var alignment: Alignment
 
-    init(alignment: Alignment) {
+    public init(alignment: Alignment = .center) {
         self.alignment = alignment
     }
 
