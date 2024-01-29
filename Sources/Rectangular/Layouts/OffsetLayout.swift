@@ -10,6 +10,11 @@ public struct OffsetLayout: Layout {
 
     private let layout: ZStackLayout = .init()
 
+    public init(x: Double, y: Double) {
+        self.x = x
+        self.y = y
+    }
+
     public func sizeThatFits(items: [Rectangular.LayoutItem]) -> Rectangular.Size {
         layout.sizeThatFits(items: items)
     }
