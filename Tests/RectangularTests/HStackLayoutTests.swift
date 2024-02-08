@@ -184,4 +184,22 @@ final class HStackLayoutTests: XCTestCase {
         XCTAssertEqual(frames[1].width, 30)
         XCTAssertEqual(frames[1].height, 30)
     }
+
+    func test_fixed_item_overlapped_frames_with_negative_spacing() {
+        struct FixedItem: LayoutItem {
+            var intrinsicSize: Size { .init(width: 10, height: 10) }
+            func sizeThatFits(_ size: Size) -> Size { intrinsicSize }
+        }
+        let bounds = Rectangle(origin: .zero, size: .square(100))
+        let layout = HStackLayout(spacing: -5)
+        let items: [any LayoutItem] = [FixedItem(), FixedItem(), FixedItem()]
+        let frames = layout.frames(for: items, within: bounds)
+
+        XCTAssertEqual(frames[0].x, 0)
+        XCTAssertEqual(frames[0].width, 10)
+        XCTAssertEqual(frames[1].x, 5)
+        XCTAssertEqual(frames[1].width, 10)
+        XCTAssertEqual(frames[2].x, 10)
+        XCTAssertEqual(frames[2].width, 10)
+    }
 }
