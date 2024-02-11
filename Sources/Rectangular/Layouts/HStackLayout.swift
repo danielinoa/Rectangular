@@ -28,8 +28,7 @@ public struct HStackLayout: Layout {
     public func sizeThatFits(items: [any LayoutItem], within size: Size) -> Size {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
         let itemsMaxWidth = items.map { $0.sizeThatFits(size).width }.reduce(.zero, +)
-        // TODO: Should the fitting width be clamped or should it be allowed to overflow?
-        let fittingWidth = (itemsMaxWidth + totalInteritemSpacing).clamped(upTo: size.width)
+        let fittingWidth = (itemsMaxWidth + totalInteritemSpacing)
         let fittingHeight = items.map { $0.sizeThatFits(size).height }.max() ?? .zero
         let size = Size(width: fittingWidth, height: fittingHeight)
         return size
@@ -83,7 +82,7 @@ public struct HStackLayout: Layout {
         // and works itself towards the widest view.
         while !widthAscendingPairs.isEmpty {
             // An equal amount of space for views yet to be added to the size-table.
-            let equalAllotmentWidth = sharedAvailableWidth / Double(widthAscendingPairs.count)
+            let equalAllotmentWidth = sharedAvailableWi dth / Double(widthAscendingPairs.count)
             let pair: IndexedItem = widthAscendingPairs.removeFirst()
             let sizeProposal = Size(width: equalAllotmentWidth, height: size.height)
             let fittingSize = pair.item.sizeThatFits(sizeProposal)

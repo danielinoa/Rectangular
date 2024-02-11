@@ -31,7 +31,7 @@ public struct VStackLayout: Layout {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
         let itemsMaxHeight = items.map { $0.sizeThatFits(size).height }.reduce(.zero, +)
         let fittingWidth = items.map { $0.sizeThatFits(size).width }.max() ?? .zero
-        let fittingHeight = (itemsMaxHeight + totalInteritemSpacing).clamped(upTo: size.height)
+        let fittingHeight = (itemsMaxHeight + totalInteritemSpacing)
         let size = Size(width: fittingWidth, height: fittingHeight)
         return size
     }

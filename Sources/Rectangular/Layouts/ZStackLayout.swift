@@ -25,10 +25,7 @@ public struct ZStackLayout: Layout {
         let fittingSizes = items.map { $0.sizeThatFits(size) }
         let maxWidth = fittingSizes.map(\.width).max() ?? .zero
         let maxHeight = fittingSizes.map(\.height).max() ?? .zero
-        return .init(
-            width: maxWidth.clamped(upTo: size.width),
-            height: maxHeight.clamped(upTo: size.height)
-        )
+        return .init(width: maxWidth, height: maxHeight)
     }
     
     public func frames(for items: [LayoutItem], within bounds: Rectangle) -> [Rectangle] {
