@@ -11,8 +11,8 @@ public protocol Layout {
     /// Returns the size needed to fit the layout-items within the specified size.
     /// - note: This function queries items' best fitting size, through `sizeThatFits(_:)`,
     ///         to calculate the resulting size.
-    /// - note: The resulting size typically becomes the proposed size when there are items that use as much space as
-    ///         is proposed to them.
+    /// - note: The resulting size can be larger than the proposed size when the items can not be accomodated within the
+    ///         proposed size. Prevent clamping as to respect the items' ideal size.
     func sizeThatFits(items: [any LayoutItem], within: Size) -> Size
 
     /// Returns the position and size for each layout-item within the specified bounds, considering their priority
