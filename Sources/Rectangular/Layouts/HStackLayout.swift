@@ -82,7 +82,7 @@ public struct HStackLayout: Layout {
         // and works itself towards the widest view.
         while !widthAscendingPairs.isEmpty {
             // An equal amount of space for views yet to be added to the size-table.
-            let equalAllotmentWidth = sharedAvailableWi dth / Double(widthAscendingPairs.count)
+            let equalAllotmentWidth = sharedAvailableWidth / Double(widthAscendingPairs.count)
             let pair: IndexedItem = widthAscendingPairs.removeFirst()
             let sizeProposal = Size(width: equalAllotmentWidth, height: size.height)
             let fittingSize = pair.item.sizeThatFits(sizeProposal)
