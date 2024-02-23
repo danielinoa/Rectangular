@@ -2,7 +2,7 @@
 //  Created by Daniel Inoa on 2/6/24.
 //
 
-/// This layout computes the frames of items within a containing bound where items are arranged horizontally and
+/// A layout that computes the frames of items within a containing bound where items are arranged horizontally and
 /// wrapped vertically.
 public struct FlowLayout {
 
