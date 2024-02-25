@@ -98,7 +98,7 @@ public struct HFlexLayout: Layout {
             let itemsWidth = items.map(\.intrinsicSize.width).reduce(.zero, +)
             let remainingSpace = bounds.width - itemsWidth
             let interitemSpacing = items.count == 1 ? remainingSpace : remainingSpace / Double(items.count - 1)
-            let horizontalPadding = interitemSpacing / 2
+            let horizontalPadding = interitemSpacing / 2 * Double(items.count)
             var leadingOffset = bounds.leadingX
             let frames: [Rectangle] = items.map { item in
                 leadingOffset += horizontalPadding
