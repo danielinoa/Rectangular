@@ -97,16 +97,15 @@ public struct HFlexLayout: Layout {
             // TODO: Use `gap` as minimum interim spacing.
             let itemsWidth = items.map(\.intrinsicSize.width).reduce(.zero, +)
             let remainingSpace = bounds.width - itemsWidth
-            let interitemSpacing = items.count == 1 ? remainingSpace : remainingSpace / Double(items.count - 1)
-            let horizontalPadding = interitemSpacing / 2 * Double(items.count)
+            let interitemPadding = items.isEmpty ? remainingSpace : remainingSpace / (2 * Double(items.count))
             var leadingOffset = bounds.leadingX
             let frames: [Rectangle] = items.map { item in
-                leadingOffset += horizontalPadding
+                leadingOffset += interitemPadding
                 let size = item.intrinsicSize
                 let x = leadingOffset
                 let y = Self.topOffset(for: size, aligned: alignment, within: bounds)
                 let frame = Rectangle(x: x, y: y, size: size)
-                leadingOffset += size.width + horizontalPadding
+                leadingOffset += size.width + interitemPadding
                 return frame
             }
             return frames
@@ -114,7 +113,7 @@ public struct HFlexLayout: Layout {
             // TODO: Use `gap` as minimum interim spacing.
             let itemsWidth = items.map(\.intrinsicSize.width).reduce(.zero, +)
             let remainingSpace = bounds.width - itemsWidth
-            let interitemSpacing = items.count == 1 ? remainingSpace : remainingSpace / Double(items.count - 1)
+            let interitemSpacing = remainingSpace / Double(items.count + 1)
             var leadingOffset = bounds.leadingX + interitemSpacing
             let frames: [Rectangle] = items.map { item in
                 // Unlike HStack, items in a HFlex do not compete for space and instead are free to overflow.
