@@ -2,8 +2,9 @@
 //  Created by Daniel Inoa on 2/11/24.
 //
 
-// TODO: Add documentation
+// TODO: Add documentation.
 // TODO: Add gap-spacing for all distributions.
+// TODO: Add tests.
 
 public struct HFlexLayout: Layout {
 
