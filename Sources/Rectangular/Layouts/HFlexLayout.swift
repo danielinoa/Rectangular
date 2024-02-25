@@ -9,17 +9,17 @@ public struct HFlexLayout: Layout {
     public var distribution: Distribution
     public var alignment: VerticalAlignment
 
-    /// The minimum interitem spacing.
-    public var gap: Double
-
-    public init(distribution: Distribution = .center, alignment: VerticalAlignment = .center, gap: Double = .zero) {
+    public init(distribution: Distribution = .center(spacing: .zero), alignment: VerticalAlignment = .center) {
         self.alignment = alignment
         self.distribution = distribution
-        self.gap = gap
     }
 
     public func sizeThatFits(items: [LayoutItem]) -> Size {
-        let totalInteritemSpacing: Double = !items.isEmpty ? Double(items.count - 1) * gap : .zero
+        let spacing: Double = switch distribution {
+        case .leading(let spacing), .center(let spacing), .trailing(let spacing): spacing
+        case .spaceBetween, .spaceAround, .spaceEvenly: .zero
+        }
+        let totalInteritemSpacing: Double = !items.isEmpty ? Double(items.count - 1) * spacing : .zero
         let itemsWidth = items.map(\.intrinsicSize.width).reduce(.zero, +)
         let totalWidth = itemsWidth + totalInteritemSpacing
         let maxHeight = items.map(\.intrinsicSize.height).max() ?? .zero
@@ -33,58 +33,49 @@ public struct HFlexLayout: Layout {
     
     public func frames(for items: [LayoutItem], within bounds: Rectangle) -> [Rectangle] {
         switch distribution {
-        case .start:
+        case .leading(let spacing):
             var leadingOffset = bounds.leadingX
             let frames: [Rectangle] = items.map { item in
-                // Unlike HStack, items in a HFlex do not compete for space and instead are free to overflow.
-                // TODO: Check assumption
                 let size = item.intrinsicSize
                 let x = leadingOffset
                 let y = Self.topOffset(for: size, aligned: alignment, within: bounds)
                 let frame = Rectangle(x: x, y: y, size: size)
-                leadingOffset += size.width + gap
+                leadingOffset += size.width + spacing
                 return frame
             }
             return frames
-        case .end:
-            let intrinsicWidth = sizeThatFits(items: items).width
-            let remainingWidth = bounds.width - intrinsicWidth
-            var leadingOffset = bounds.leadingX + remainingWidth
-            let frames: [Rectangle] = items.map { item in
-                // Unlike HStack, items in a HFlex do not compete for space and instead are free to overflow.
-                // TODO: Check assumption
-                let size = item.intrinsicSize
-                let x = leadingOffset
-                let y = Self.topOffset(for: size, aligned: alignment, within: bounds)
-                let frame = Rectangle(x: x, y: y, size: size)
-                leadingOffset += size.width + gap
-                return frame
-            }
-            return frames
-        case .center:
+        case .center(let spacing):
             let intrinsicWidth = sizeThatFits(items: items).width
             let remainingWidth = bounds.width - intrinsicWidth
             var leadingOffset = bounds.leadingX + (remainingWidth / 2)
             let frames: [Rectangle] = items.map { item in
-                // Unlike HStack, items in a HFlex do not compete for space and instead are free to overflow.
-                // TODO: Check assumption
                 let size = item.intrinsicSize
                 let x = leadingOffset
                 let y = Self.topOffset(for: size, aligned: alignment, within: bounds)
                 let frame = Rectangle(x: x, y: y, size: size)
-                leadingOffset += size.width + gap
+                leadingOffset += size.width + spacing
+                return frame
+            }
+            return frames
+        case .trailing(let spacing):
+            let intrinsicWidth = sizeThatFits(items: items).width
+            let remainingWidth = bounds.width - intrinsicWidth
+            var leadingOffset = bounds.leadingX + remainingWidth
+            let frames: [Rectangle] = items.map { item in
+                let size = item.intrinsicSize
+                let x = leadingOffset
+                let y = Self.topOffset(for: size, aligned: alignment, within: bounds)
+                let frame = Rectangle(x: x, y: y, size: size)
+                leadingOffset += size.width + spacing
                 return frame
             }
             return frames
         case .spaceBetween:
-            // TODO: Use `gap` as minimum interim spacing.
             let itemsWidth = items.map(\.intrinsicSize.width).reduce(.zero, +)
             let remainingSpace = bounds.width - itemsWidth
             let interitemSpacing = items.count == 1 ? remainingSpace : remainingSpace / Double(items.count - 1)
             var leadingOffset = bounds.leadingX
             let frames: [Rectangle] = items.map { item in
-                // Unlike HStack, items in a HFlex do not compete for space and instead are free to overflow.
-                // TODO: Check assumption
                 let size = item.intrinsicSize
                 let x = leadingOffset
                 let y = Self.topOffset(for: size, aligned: alignment, within: bounds)
@@ -94,7 +85,6 @@ public struct HFlexLayout: Layout {
             }
             return frames
         case .spaceAround:
-            // TODO: Use `gap` as minimum interim spacing.
             let itemsWidth = items.map(\.intrinsicSize.width).reduce(.zero, +)
             let remainingSpace = bounds.width - itemsWidth
             let interitemPadding = items.isEmpty ? remainingSpace : remainingSpace / (2 * Double(items.count))
@@ -110,14 +100,11 @@ public struct HFlexLayout: Layout {
             }
             return frames
         case .spaceEvenly:
-            // TODO: Use `gap` as minimum interim spacing.
             let itemsWidth = items.map(\.intrinsicSize.width).reduce(.zero, +)
             let remainingSpace = bounds.width - itemsWidth
             let interitemSpacing = remainingSpace / Double(items.count + 1)
             var leadingOffset = bounds.leadingX + interitemSpacing
             let frames: [Rectangle] = items.map { item in
-                // Unlike HStack, items in a HFlex do not compete for space and instead are free to overflow.
-                // TODO: Check assumption
                 let size = item.intrinsicSize
                 let x = leadingOffset
                 let y = Self.topOffset(for: size, aligned: alignment, within: bounds)
@@ -142,11 +129,11 @@ public struct HFlexLayout: Layout {
 
 extension HFlexLayout {
 
-    /// The layout that defines the position of layout items along the horizontal axis.
+    /// The distribution that defines the position of layout items along the horizontal axis.
     public enum Distribution {
-        case start
-        case end
-        case center
+        case leading(spacing: Double = .zero)
+        case center(spacing: Double)
+        case trailing(spacing: Double)
         case spaceBetween
         case spaceAround
         case spaceEvenly
