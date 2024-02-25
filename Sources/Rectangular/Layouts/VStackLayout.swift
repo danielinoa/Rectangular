@@ -2,8 +2,6 @@
 //  Created by Daniel Inoa on 1/4/24.
 //
 
-import SwiftPlus
-
 /// A layout that arranges its items along the vertical axis.
 public struct VStackLayout: Layout {
 
