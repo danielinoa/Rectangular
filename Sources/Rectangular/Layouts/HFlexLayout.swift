@@ -6,12 +6,17 @@
 
 public struct HFlexLayout: Layout {
 
-    public var alignment: VerticalAlignment
-
     public var distribution: Distribution
+    public var alignment: VerticalAlignment
 
     /// The minimum interitem spacing.
     public var gap: Double
+
+    public init(distribution: Distribution = .center, alignment: VerticalAlignment = .center, gap: Double = .zero) {
+        self.alignment = alignment
+        self.distribution = distribution
+        self.gap = gap
+    }
 
     public func sizeThatFits(items: [LayoutItem]) -> Size {
         let totalInteritemSpacing: Double = !items.isEmpty ? Double(items.count - 1) * gap : .zero
