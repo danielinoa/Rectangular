@@ -131,7 +131,7 @@ extension HFlexLayout {
 
     /// The distribution that defines the position of layout items along the horizontal axis.
     public enum Distribution {
-        case leading(spacing: Double = .zero)
+        case leading(spacing: Double)
         case center(spacing: Double)
         case trailing(spacing: Double)
         case spaceBetween
