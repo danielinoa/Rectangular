@@ -9,7 +9,9 @@ public struct HStackLayout: Layout {
     private typealias SizedItem = (size: Size, item: any LayoutItem)
     private typealias IndexedItem = (index: Int, item: any LayoutItem)
 
+    /// The horizontal distance between adjacent items within the stack.
     public var spacing: Double
+    
     public var alignment: VerticalAlignment
 
     public init(alignment: VerticalAlignment = .center, spacing: Double = .zero) {
