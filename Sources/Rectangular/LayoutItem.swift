@@ -4,6 +4,7 @@
 
 public protocol LayoutItem {
 
+    // TODO: Consider using LayoutPriority to prevent collision with another protocol also requiring a `priority: Int`.
     var priority: Int { get }
 
     /// The layout item's natural size, considering only properties of the item itself.
