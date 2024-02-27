@@ -38,7 +38,7 @@ final class HStackLayoutTests: XCTestCase {
         let item2 = Spacer()
         let layout = HStackLayout()
         let size = layout.sizeThatFits(items: [item1, item2], within: bounds)
-        let expected = Size.init(width: 200, height: 100)
+        let expected = Size.init(width: 100, height: 100)
         XCTAssertEqual(size, expected)
     }
 
@@ -51,7 +51,7 @@ final class HStackLayoutTests: XCTestCase {
         let item2 = Spacer()
         let layout = HStackLayout.init(spacing: 10)
         let size = layout.sizeThatFits(items: [item1, item2], within: bounds)
-        let expected = Size.init(width: 210, height: 100)
+        let expected = Size.init(width: 100, height: 100)
         XCTAssertEqual(size, expected)
     }
 

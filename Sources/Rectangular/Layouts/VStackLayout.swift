@@ -29,11 +29,10 @@ public struct VStackLayout: Layout {
 
     public func sizeThatFits(items: [any LayoutItem], within size: Size) -> Size {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
-        let itemsMaxHeight = items.map { $0.sizeThatFits(size).height }.reduce(.zero, +)
-        let fittingWidth = items.map { $0.sizeThatFits(size).width }.max() ?? .zero
-        let fittingHeight = (itemsMaxHeight + totalInteritemSpacing)
-        let size = Size(width: fittingWidth, height: fittingHeight)
-        return size
+        let sizes = sizes(for: items, within: size).map(\.size)
+        let width = sizes.map(\.width).max() ?? .zero
+        let height = totalInteritemSpacing + sizes.map(\.height).reduce(.zero, +)
+        return .init(width: width, height: height)
     }
     
     public func frames(for items: [any LayoutItem], within bounds: Rectangle) -> [Rectangle] {
@@ -49,6 +48,9 @@ public struct VStackLayout: Layout {
         return frames
     }
 
+    /// Returns the array of items with their corresponding ideal size, in the same order they were passed in.
+    /// - note: The size of any particular item is dependent on the specified bounding size and the item's own layout
+    /// priority relative its neighboring items.
     private func sizes(for items: [any LayoutItem], within size: Size) -> [SizedItem] {
         let pairs: [IndexedItem] = items.enumerated().map { ($0, $1) }
         var availableHeight = size.height - totalInteritemSpacing(for: items)

@@ -29,11 +29,10 @@ public struct HStackLayout: Layout {
 
     public func sizeThatFits(items: [any LayoutItem], within size: Size) -> Size {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
-        let itemsMaxWidth = items.map { $0.sizeThatFits(size).width }.reduce(.zero, +)
-        let fittingWidth = (itemsMaxWidth + totalInteritemSpacing)
-        let fittingHeight = items.map { $0.sizeThatFits(size).height }.max() ?? .zero
-        let size = Size(width: fittingWidth, height: fittingHeight)
-        return size
+        let sizes = sizes(for: items, within: size).map(\.size)
+        let width = totalInteritemSpacing + sizes.map(\.width).reduce(.zero, +)
+        let height = sizes.map(\.height).max() ?? .zero
+        return .init(width: width, height: height)
     }
 
     public func frames(for items: [any LayoutItem], within bounds: Rectangle) -> [Rectangle] {
