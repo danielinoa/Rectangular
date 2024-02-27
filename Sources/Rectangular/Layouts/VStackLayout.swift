@@ -50,7 +50,7 @@ public struct VStackLayout: Layout {
 
     /// Returns the array of items with their corresponding ideal size, in the same order they were passed in.
     /// - note: The size of any particular item is dependent on the specified bounding size and the item's own layout
-    /// priority relative its neighboring items.
+    /// priority relative to its neighboring items.
     private func sizes(for items: [any LayoutItem], within size: Size) -> [SizedItem] {
         let pairs: [IndexedItem] = items.enumerated().map { ($0, $1) }
         var availableHeight = size.height - totalInteritemSpacing(for: items)
