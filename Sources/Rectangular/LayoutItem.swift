@@ -3,8 +3,12 @@
 //
 
 public protocol LayoutItem {
+
     var priority: Int { get }
+
+    /// The layout item's natural size, considering only properties of the item itself.
     var intrinsicSize: Size { get }
+
     func sizeThatFits(_ size: Size) -> Size
 }
 
