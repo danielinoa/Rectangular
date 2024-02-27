@@ -19,7 +19,7 @@ public struct HStackLayout: Layout {
         self.spacing = spacing
     }
 
-    public func sizeThatFits(items: [any LayoutItem]) -> Size {
+    public func minimumSize(for items: [any LayoutItem]) -> Size {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
         let itemsWidth = items.map(\.intrinsicSize.width).reduce(.zero, +)
         let totalWidth = itemsWidth + totalInteritemSpacing

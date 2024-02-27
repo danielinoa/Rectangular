@@ -5,14 +5,14 @@ final class HStackLayoutTests: XCTestCase {
 
     func test_size_with_no_items() {
         let layout = HStackLayout()
-        let size = layout.sizeThatFits(items: [])
+        let size = layout.minimumSize(for: [])
         XCTAssertEqual(size, .zero)
     }
 
     func test_size_with_no_items_and_with_non_zero_spacing() {
         var layout = HStackLayout()
         layout.spacing = 10
-        let size = layout.sizeThatFits(items: [])
+        let size = layout.minimumSize(for: [])
         XCTAssertEqual(size, .zero)
     }
 
@@ -24,7 +24,7 @@ final class HStackLayoutTests: XCTestCase {
         var layout = HStackLayout()
         layout.spacing = 10
         let item1 = FixedItem()
-        let size = layout.sizeThatFits(items: [item1])
+        let size = layout.minimumSize(for: [item1])
         let expected = Size.square(100)
         XCTAssertEqual(size, expected)
     }

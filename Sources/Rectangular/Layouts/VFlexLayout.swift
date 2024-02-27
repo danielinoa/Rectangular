@@ -16,7 +16,7 @@ public struct VFlexLayout: Layout {
         self.distribution = distribution
     }
 
-    public func sizeThatFits(items: [LayoutItem]) -> Size {
+    public func minimumSize(for items: [LayoutItem]) -> Size {
         let spacing: Double = switch distribution {
         case .top(let spacing), .center(let spacing), .bottom(let spacing): spacing
         case .spaceBetween, .spaceAround, .spaceEvenly: .zero
@@ -48,7 +48,7 @@ public struct VFlexLayout: Layout {
             }
             return frames
         case .center(let spacing):
-            let intrinsicHeight = sizeThatFits(items: items).height
+            let intrinsicHeight = minimumSize(for: items).height
             let remainingHeight = bounds.height - intrinsicHeight
             var topOffset = bounds.topY + (remainingHeight / 2)
             let frames: [Rectangle] = items.map { item in
@@ -61,7 +61,7 @@ public struct VFlexLayout: Layout {
             }
             return frames
         case .bottom(let spacing):
-            let intrinsicHeight = sizeThatFits(items: items).height
+            let intrinsicHeight = minimumSize(for: items).height
             let remainingHeight = bounds.height - intrinsicHeight
             var topOffset = bounds.topY + remainingHeight
             let frames: [Rectangle] = items.map { item in

@@ -16,8 +16,8 @@ public struct PaddingLayout: Layout {
 
     // MARK: - Layout
 
-    public func sizeThatFits(items: [Rectangular.LayoutItem]) -> Rectangular.Size {
-        let size = layout.sizeThatFits(items: items)
+    public func minimumSize(for items: [Rectangular.LayoutItem]) -> Rectangular.Size {
+        let size = layout.minimumSize(for: items)
         return .init(
             width: size.width + insets.left + insets.right,
             height: size.height + insets.top + insets.bottom

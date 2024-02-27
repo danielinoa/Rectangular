@@ -181,10 +181,10 @@ public struct FlowLayout {
 
 extension FlowLayout: Layout {
 
-    public func sizeThatFits(items: [LayoutItem]) -> Size {
+    public func minimumSize(for items: [LayoutItem]) -> Size {
         HStackLayout
             .init(alignment: verticalAlignment, spacing: horizontalSpacing)
-            .sizeThatFits(items: items)
+            .minimumSize(for: items)
     }
     
     public func sizeThatFits(items: [LayoutItem], within proposal: Size) -> Size {

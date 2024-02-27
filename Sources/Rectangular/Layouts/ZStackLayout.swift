@@ -13,7 +13,7 @@ public struct ZStackLayout: Layout {
         self.alignment = alignment
     }
 
-    public func sizeThatFits(items: [LayoutItem]) -> Size {
+    public func minimumSize(for items: [LayoutItem]) -> Size {
         let maxWidth = items.map(\.intrinsicSize.width).max() ?? .zero
         let maxHeight = items.map(\.intrinsicSize.height).max() ?? .zero
         return .init(width: maxWidth, height: maxHeight)
