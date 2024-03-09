@@ -12,7 +12,7 @@ public struct PaddingLayout: Layout {
         self.insets = insets
     }
 
-    private let layout: ZStackLayout = .init()
+    private let layout: ZStackLayout = .init(alignment: .topLeading)
 
     // MARK: - Layout
 
