@@ -4,9 +4,9 @@
 
 public protocol Layout {
 
-    /// The layout's minimum ideal size, considering its properties and the specified items.
-    /// - note: This function should utilize the items' intrinsic or minimum size to calculate the resulting size.
-    func minimumSize(for items: [any LayoutItem]) -> Size
+    /// The layout's ideal size, considering its properties and the specified items.
+    /// - note: This function should utilize the items' intrinsic size to calculate the resulting size.
+    func naturalSize(for items: [any LayoutItem]) -> Size
 
     /// Returns the size needed to fit the items within the proposed size.
     /// - note: This function queries items' best fitting size, through `sizeThatFits(_:)`,

@@ -16,7 +16,7 @@ public struct HFlexLayout: Layout {
         self.distribution = distribution
     }
 
-    public func minimumSize(for items: [LayoutItem]) -> Size {
+    public func naturalSize(for items: [LayoutItem]) -> Size {
         let spacing: Double = switch distribution {
         case .leading(let spacing), .center(let spacing), .trailing(let spacing): spacing
         case .spaceBetween, .spaceAround, .spaceEvenly: .zero
@@ -47,7 +47,7 @@ public struct HFlexLayout: Layout {
             }
             return frames
         case .center(let spacing):
-            let intrinsicWidth = minimumSize(for: items).width
+            let intrinsicWidth = naturalSize(for: items).width
             let remainingWidth = bounds.width - intrinsicWidth
             var leadingOffset = bounds.leadingX + (remainingWidth / 2)
             let frames: [Rectangle] = items.map { item in
@@ -60,7 +60,7 @@ public struct HFlexLayout: Layout {
             }
             return frames
         case .trailing(let spacing):
-            let intrinsicWidth = minimumSize(for: items).width
+            let intrinsicWidth = naturalSize(for: items).width
             let remainingWidth = bounds.width - intrinsicWidth
             var leadingOffset = bounds.leadingX + remainingWidth
             let frames: [Rectangle] = items.map { item in

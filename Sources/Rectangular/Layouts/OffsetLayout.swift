@@ -15,8 +15,8 @@ public struct OffsetLayout: Layout {
         self.y = y
     }
 
-    public func minimumSize(for items: [Rectangular.LayoutItem]) -> Rectangular.Size {
-        layout.minimumSize(for: items)
+    public func naturalSize(for items: [Rectangular.LayoutItem]) -> Rectangular.Size {
+        layout.naturalSize(for: items)
     }
 
     public func sizeThatFits(items: [Rectangular.LayoutItem], within: Rectangular.Size) -> Rectangular.Size {
