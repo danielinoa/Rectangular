@@ -38,7 +38,7 @@ final class VStackLayoutTests: XCTestCase {
         let item1 = Spacer()
         let item2 = Spacer()
         let layout = VStackLayout()
-        let size = layout.sizeThatFits(items: [item1, item2], within: bounds)
+        let size = layout.size(fitting: [item1, item2], within: bounds)
         let expected = Size.square(100)
         XCTAssertEqual(size, expected)
     }
@@ -48,7 +48,7 @@ final class VStackLayoutTests: XCTestCase {
         let item1 = Spacer()
         let item2 = Spacer()
         let layout = VStackLayout.init(spacing: 10)
-        let size = layout.sizeThatFits(items: [item1, item2], within: bounds)
+        let size = layout.size(fitting: [item1, item2], within: bounds)
         let expected = Size.square(100)
         XCTAssertEqual(size, expected)
     }
@@ -60,7 +60,7 @@ final class VStackLayoutTests: XCTestCase {
         let bounds = Size.square(100)
         let item1 = FixedItem()
         let layout = VStackLayout()
-        let size = layout.sizeThatFits(items: [item1], within: bounds)
+        let size = layout.size(fitting: [item1], within: bounds)
         let expected = Size.init(width: 100, height: 50)
         XCTAssertEqual(size, expected)
     }
@@ -72,7 +72,7 @@ final class VStackLayoutTests: XCTestCase {
         let bounds = Size.square(100)
         let item1 = FixedItem()
         let layout = VStackLayout(spacing: 10)
-        let size = layout.sizeThatFits(items: [item1], within: bounds)
+        let size = layout.size(fitting: [item1], within: bounds)
         let expected = Size.init(width: 100, height: 50)
         XCTAssertEqual(size, expected)
     }
@@ -85,7 +85,7 @@ final class VStackLayoutTests: XCTestCase {
         let item1 = FixedItem()
         let item2 = FixedItem()
         let layout = VStackLayout(spacing: 10)
-        let size = layout.sizeThatFits(items: [item1, item2], within: bounds)
+        let size = layout.size(fitting: [item1, item2], within: bounds)
         let expected = Size.init(width: 100, height: 50)
         XCTAssertEqual(size, expected)
     }

@@ -38,7 +38,7 @@ final class HStackLayoutTests: XCTestCase {
         let item1 = Spacer()
         let item2 = Spacer()
         let layout = HStackLayout()
-        let size = layout.sizeThatFits(items: [item1, item2], within: bounds)
+        let size = layout.size(fitting: [item1, item2], within: bounds)
         let expected = Size.init(width: 100, height: 100)
         XCTAssertEqual(size, expected)
     }
@@ -48,7 +48,7 @@ final class HStackLayoutTests: XCTestCase {
         let item1 = Spacer()
         let item2 = Spacer()
         let layout = HStackLayout.init(spacing: 10)
-        let size = layout.sizeThatFits(items: [item1, item2], within: bounds)
+        let size = layout.size(fitting: [item1, item2], within: bounds)
         let expected = Size.init(width: 100, height: 100)
         XCTAssertEqual(size, expected)
     }
@@ -60,7 +60,7 @@ final class HStackLayoutTests: XCTestCase {
         let bounds = Size.square(100)
         let item1 = FixedItem()
         let layout = HStackLayout()
-        let size = layout.sizeThatFits(items: [item1], within: bounds)
+        let size = layout.size(fitting: [item1], within: bounds)
         let expected = Size.init(width: 50, height: 100)
         XCTAssertEqual(size, expected)
     }
@@ -72,7 +72,7 @@ final class HStackLayoutTests: XCTestCase {
         let bounds = Size.square(100)
         let item1 = FixedItem()
         let layout = HStackLayout(spacing: 10)
-        let size = layout.sizeThatFits(items: [item1], within: bounds)
+        let size = layout.size(fitting: [item1], within: bounds)
         let expected = Size.init(width: 50, height: 100)
         XCTAssertEqual(size, expected)
     }
@@ -85,7 +85,7 @@ final class HStackLayoutTests: XCTestCase {
         let item1 = FixedItem()
         let item2 = FixedItem()
         let layout = HStackLayout(spacing: 10)
-        let size = layout.sizeThatFits(items: [item1, item2], within: bounds)
+        let size = layout.size(fitting: [item1, item2], within: bounds)
         let expected = Size.init(width: 50, height: 100)
         XCTAssertEqual(size, expected)
     }
