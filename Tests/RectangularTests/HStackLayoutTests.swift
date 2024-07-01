@@ -3,6 +3,10 @@ import XCTest
 
 final class HStackLayoutTests: XCTestCase {
 
+    private struct Spacer: LayoutItem {
+        func sizeThatFits(_ size: Size) -> Size { size }
+    }
+
     func test_size_with_no_items() {
         let layout = HStackLayout()
         let size = layout.naturalSize(for: [])
@@ -30,9 +34,6 @@ final class HStackLayoutTests: XCTestCase {
     }
 
     func test_size_with_2_flexible_items() {
-        struct Spacer: LayoutItem {
-            func sizeThatFits(_ size: Size) -> Size { size }
-        }
         let bounds = Size.square(100)
         let item1 = Spacer()
         let item2 = Spacer()
@@ -43,9 +44,6 @@ final class HStackLayoutTests: XCTestCase {
     }
 
     func test_size_with_2_flexible_items_and_spacing() {
-        struct Spacer: LayoutItem {
-            func sizeThatFits(_ size: Size) -> Size { size }
-        }
         let bounds = Size.square(100)
         let item1 = Spacer()
         let item2 = Spacer()
@@ -201,5 +199,26 @@ final class HStackLayoutTests: XCTestCase {
         XCTAssertEqual(frames[1].width, 10)
         XCTAssertEqual(frames[2].x, 10)
         XCTAssertEqual(frames[2].width, 10)
+    }
+
+    func test_flexible_item_with_minimum_width_is_given_layout_priority_over_spacer() {
+        struct FlexItem: LayoutItem {
+            func sizeThatFits(_ size: Size) -> Size {
+                let minimumWidth = max(70, size.width)
+                let fittingSize = Size(width: minimumWidth, height: size.height)
+                return fittingSize
+            }
+        }
+        let spacer = Spacer()
+        let minWidthItem = FlexItem()
+        let bounds = Rectangle(origin: .zero, size: .square(100))
+        let layout = HStackLayout()
+        let items: [any LayoutItem] = [spacer, minWidthItem]
+        let frames = layout.frames(for: items, within: bounds)
+
+        XCTAssertEqual(frames[0].x, 0)
+        XCTAssertEqual(frames[0].width, 30)
+        XCTAssertEqual(frames[1].x, 30)
+        XCTAssertEqual(frames[1].width, 70)
     }
 }

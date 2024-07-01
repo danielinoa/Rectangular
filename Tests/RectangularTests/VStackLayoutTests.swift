@@ -1,11 +1,11 @@
-//
-//  Created by Daniel Inoa on 1/4/24.
-//
-
 import XCTest
 @testable import Rectangular
 
 final class VStackLayoutTests: XCTestCase {
+
+    private struct Spacer: LayoutItem {
+        func sizeThatFits(_ size: Size) -> Size { size }
+    }
 
     func test_size_with_no_items() {
         let layout = VStackLayout()
@@ -34,9 +34,6 @@ final class VStackLayoutTests: XCTestCase {
     }
 
     func test_size_with_2_flexible_items() {
-        struct Spacer: LayoutItem {
-            func sizeThatFits(_ size: Size) -> Size { size }
-        }
         let bounds = Size.square(100)
         let item1 = Spacer()
         let item2 = Spacer()
@@ -47,9 +44,6 @@ final class VStackLayoutTests: XCTestCase {
     }
 
     func test_size_with_2_flexible_items_and_spacing() {
-        struct Spacer: LayoutItem {
-            func sizeThatFits(_ size: Size) -> Size { size }
-        }
         let bounds = Size.square(100)
         let item1 = Spacer()
         let item2 = Spacer()
@@ -187,5 +181,44 @@ final class VStackLayoutTests: XCTestCase {
         XCTAssertEqual(frames[1].y, 100)
         XCTAssertEqual(frames[1].width, 30)
         XCTAssertEqual(frames[1].height, 30)
+    }
+
+    func test_fixed_item_overlapped_frames_with_negative_spacing() {
+        struct FixedItem: LayoutItem {
+            var intrinsicSize: Size { .init(width: 10, height: 10) }
+            func sizeThatFits(_ size: Size) -> Size { intrinsicSize }
+        }
+        let bounds = Rectangle(origin: .zero, size: .square(100))
+        let layout = VStackLayout(spacing: -5)
+        let items: [any LayoutItem] = [FixedItem(), FixedItem(), FixedItem()]
+        let frames = layout.frames(for: items, within: bounds)
+
+        XCTAssertEqual(frames[0].y, 0)
+        XCTAssertEqual(frames[0].height, 10)
+        XCTAssertEqual(frames[1].y, 5)
+        XCTAssertEqual(frames[1].height, 10)
+        XCTAssertEqual(frames[2].y, 10)
+        XCTAssertEqual(frames[2].height, 10)
+    }
+
+    func test_flexible_item_with_minimum_width_is_given_layout_priority_over_spacer() {
+        struct FlexItem: LayoutItem {
+            func sizeThatFits(_ size: Size) -> Size {
+                let minimumHeight = max(70, size.height)
+                let fittingSize = Size(width: size.width, height: minimumHeight)
+                return fittingSize
+            }
+        }
+        let spacer = Spacer()
+        let minWidthItem = FlexItem()
+        let bounds = Rectangle(origin: .zero, size: .square(100))
+        let layout = VStackLayout()
+        let items: [any LayoutItem] = [spacer, minWidthItem]
+        let frames = layout.frames(for: items, within: bounds)
+
+        XCTAssertEqual(frames[0].y, 0)
+        XCTAssertEqual(frames[0].height, 30)
+        XCTAssertEqual(frames[1].y, 30)
+        XCTAssertEqual(frames[1].height, 70)
     }
 }

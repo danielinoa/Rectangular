@@ -73,23 +73,33 @@ public struct VStackLayout: Layout {
     ) -> (sizeTable: [Priority: SizedItem], remainingHeight: Double) {
         var sizeTable: [Priority: SizedItem] = .init()
 
-        // The space that remains as views occupy the proposed size.
+        // The space that remains as items occupy the proposed size.
         var sharedAvailableHeight = size.height
 
-        // The specified array of views, sorted in ascending manner based on their fitting width.
-        // This ensures that each item gets as much available space as it needs.
-        var heightAscendingPairs = pairs.sorted { $0.item.sizeThatFits(size).height < $1.item.sizeThatFits(size).height }
+        // Scalability in this context refers to the ability of an item to be resized over a larger range of values.
+        let group: [(index: Int, item: any LayoutItem, scalability: Double)] = pairs.map { index, item in
+            let shrunkProbingSize = Size(width: size.width, height: .zero)
+            let expandedProbingSize = size
+            let minimumHeight = item.sizeThatFits(shrunkProbingSize).height
+            let maximumHeight = item.sizeThatFits(expandedProbingSize).height
+            let scalability = maximumHeight - minimumHeight
+            return (index, item, scalability)
+        }
+
+        // Least scalable item first.
+        var scaleAscendingGroups = group.sorted { $0.scalability < $1.scalability }
 
         // When calculating sizes all views start with an equal amount space within the "shared available space".
         // Any remaining space unused by a view is then returned to the "shared available space" for other views to use.
-        // In order to ensure no space is wasted in the aforementioned step, the algorithm starts with the thinnest view
-        // and works itself towards the widest view.
-        while !heightAscendingPairs.isEmpty {
+        // In order to ensure no space is wasted in the aforementioned step, the algorithm starts with the least
+        // scalable item and works itself towards the more scalable item.
+        while !scaleAscendingGroups.isEmpty {
             // An equal amount of space for views yet to be added to the size-table.
-            let equalAllotmentHeight = sharedAvailableHeight / Double(heightAscendingPairs.count)
-            let pair = heightAscendingPairs.removeFirst()
-            let fittingSize = pair.item.sizeThatFits(.init(width: size.width, height: equalAllotmentHeight))
-            sizeTable[pair.index] = (fittingSize, pair.item)
+            let equalAllotmentHeight = sharedAvailableHeight / Double(scaleAscendingGroups.count)
+            let group = scaleAscendingGroups.removeFirst()
+            let sizeProposal = Size(width: size.width, height: equalAllotmentHeight)
+            let fittingSize = group.item.sizeThatFits(sizeProposal)
+            sizeTable[group.index] = (fittingSize, group.item)
             sharedAvailableHeight = max(sharedAvailableHeight - fittingSize.height, .zero)
         }
         return (sizeTable, sharedAvailableHeight)
