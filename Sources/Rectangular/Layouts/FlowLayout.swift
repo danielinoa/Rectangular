@@ -187,7 +187,7 @@ extension FlowLayout: Layout {
             .naturalSize(for: items)
     }
     
-    public func sizeThatFits(items: [LayoutItem], within proposal: Size) -> Size {
+    public func size(fitting items: [LayoutItem], within proposal: Size) -> Size {
         let rects = items.map { Rectangle(origin: .zero, size: $0.intrinsicSize) }
         let layout = layout(of: rects, in: .init(origin: .zero, size: proposal))
         return .init(width: proposal.width, height: layout.fittingHeight)

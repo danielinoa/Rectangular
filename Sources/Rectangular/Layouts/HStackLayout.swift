@@ -27,7 +27,7 @@ public struct HStackLayout: Layout {
         return .init(width: totalWidth, height: maxHeight)
     }
 
-    public func sizeThatFits(items: [any LayoutItem], within size: Size) -> Size {
+    public func size(fitting items: [any LayoutItem], within size: Size) -> Size {
         let totalInteritemSpacing = totalInteritemSpacing(for: items)
         let sizes = sizes(for: items, within: size).map(\.size)
         let width = totalInteritemSpacing + sizes.map(\.width).reduce(.zero, +)

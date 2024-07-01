@@ -24,12 +24,12 @@ public struct PaddingLayout: Layout {
         )
     }
 
-    public func sizeThatFits(items: [Rectangular.LayoutItem], within proposedSize: Rectangular.Size) -> Rectangular.Size {
+    public func size(fitting items: [Rectangular.LayoutItem], within proposedSize: Rectangular.Size) -> Rectangular.Size {
         let insettedSize = Size(
             width: proposedSize.width - insets.left - insets.right,
             height: proposedSize.height - insets.top - insets.bottom
         )
-        let fittingSize = layout.sizeThatFits(items: items, within: insettedSize)
+        let fittingSize = layout.size(fitting: items, within: insettedSize)
         let size = Size(
             width: fittingSize.width + insets.left + insets.right,
             height: fittingSize.height + insets.top + insets.bottom

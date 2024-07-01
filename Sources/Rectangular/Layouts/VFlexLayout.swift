@@ -29,7 +29,7 @@ public struct VFlexLayout: Layout {
         return .init(width: maxWidth, height: totalHeight)
     }
 
-    public func sizeThatFits(items: [LayoutItem], within proposal: Size) -> Size {
+    public func size(fitting items: [LayoutItem], within proposal: Size) -> Size {
         let fittingWidth = items.map { $0.sizeThatFits(proposal).width }.max() ?? .zero
         return .init(width: fittingWidth, height: proposal.height)
     }

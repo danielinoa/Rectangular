@@ -28,7 +28,7 @@ public struct HFlexLayout: Layout {
         return .init(width: totalWidth, height: maxHeight)
     }
     
-    public func sizeThatFits(items: [LayoutItem], within proposal: Size) -> Size {
+    public func size(fitting items: [LayoutItem], within proposal: Size) -> Size {
         let fittingHeight = items.map { $0.sizeThatFits(proposal).height }.max() ?? .zero
         return .init(width: proposal.width, height: fittingHeight)
     }

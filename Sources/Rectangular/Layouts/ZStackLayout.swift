@@ -19,7 +19,7 @@ public struct ZStackLayout: Layout {
         return .init(width: maxWidth, height: maxHeight)
     }
     
-    public func sizeThatFits(items: [LayoutItem], within size: Size) -> Size {
+    public func size(fitting items: [LayoutItem], within size: Size) -> Size {
         let fittingSizes = items.map { $0.sizeThatFits(size) }
         let maxWidth = fittingSizes.map(\.width).max() ?? .zero
         let maxHeight = fittingSizes.map(\.height).max() ?? .zero
