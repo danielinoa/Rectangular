@@ -4,7 +4,7 @@
 
 import SwiftPlus
 
-public struct FrameLayout: Layout {
+public struct FlexibleFrameLayout: Layout {
 
     // TODO: Add idealWidth and idealHeight along with SizeProposal enum (value, .zero, .unspecified, and .infinity)
 
@@ -51,10 +51,7 @@ public struct FrameLayout: Layout {
             } else {
                 fallbackSize.height
             }
-        return .init(
-            width: width,
-            height: height
-        )
+        return .init(width: width, height: height)
     }
 
     public func size(fitting items: [any LayoutItem], within bounds: Size) -> Size {
