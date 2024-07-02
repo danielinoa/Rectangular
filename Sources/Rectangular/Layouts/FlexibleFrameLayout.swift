@@ -8,7 +8,11 @@ public struct FlexibleFrameLayout: Layout {
 
     // TODO: Add idealWidth and idealHeight along with SizeProposal enum (value, .zero, .unspecified, and .infinity)
 
-    private let layout: ZStackLayout
+    private var layout: ZStackLayout
+    public var alignment: Alignment {
+        get { layout.alignment }
+        set { layout.alignment = newValue }
+    }
 
     let minimumWidth: Double?
     let maximumWidth: Double?

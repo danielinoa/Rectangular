@@ -6,10 +6,14 @@ import SwiftPlus
 
 public struct FixedFrameLayout: Layout {
 
-    private let layout: ZStackLayout
+    private var layout: ZStackLayout
 
-    let width: Double?
-    let height: Double?
+    public let width: Double?
+    public let height: Double?
+    public var alignment: Alignment {
+        get { layout.alignment }
+        set { layout.alignment = newValue }
+    }
 
     public init(
         width: Double? = nil,
