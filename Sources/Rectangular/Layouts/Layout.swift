@@ -13,7 +13,7 @@ public protocol Layout {
     ///         to calculate the resulting size.
     /// - note: The resulting size can be larger than the proposed size when the items can not be accomodated within the
     ///         proposed size. Prevent clamping as to respect the items' ideal size.
-    func size(fitting items: [any LayoutItem], within: Size) -> Size
+    func size(fitting items: [any LayoutItem], within bounds: Size) -> Size
 
     /// Returns each items' corresponding frame, in the same order they were passed in.
     /// - note: The frame of any particular item is dependent on the specified bounds and the item's own layout priority
