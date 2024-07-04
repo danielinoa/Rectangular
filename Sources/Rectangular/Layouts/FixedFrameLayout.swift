@@ -15,11 +15,7 @@ public struct FixedFrameLayout: Layout {
         set { layout.alignment = newValue }
     }
 
-    public init(
-        width: Double? = nil,
-        height: Double? = nil,
-        alignment: Alignment = .center
-    ) {
+    public init(width: Double? = nil, height: Double? = nil, alignment: Alignment = .center) {
         self.width = width
         self.height = height
         self.layout = .init(alignment: alignment)
@@ -33,7 +29,16 @@ public struct FixedFrameLayout: Layout {
     }
 
     public func size(fitting items: [any LayoutItem], within bounds: Size) -> Size {
-        naturalSize(for: items)
+        let childWidthProposal = width ?? bounds.width
+        let childHeightProposal = height ?? bounds.height
+        let childPreferredSize = layout.size(
+            fitting: items,
+            within: .init(width: childWidthProposal, height: childHeightProposal)
+        )
+        return .init(
+            width: width ?? childPreferredSize.width,
+            height: height ?? childPreferredSize.height
+        )
     }
     
     public func frames(for items: [any LayoutItem], within bounds: Rectangle) -> [Rectangle] {
