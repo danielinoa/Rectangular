@@ -81,7 +81,7 @@ public struct FrameLayout: Layout {
         let preferredWidth: Double =
             if let minimumWidth, let maximumWidth {
                 if minimumWidth >= maximumWidth {
-                    max(minimumWidth, childSize.width)
+                    max(minimumWidth, childSize.width.clamped(upTo: maximumWidth))
                 } else {
                     maximumWidth.clamped(upTo: bounds.width)
                 }
@@ -95,7 +95,7 @@ public struct FrameLayout: Layout {
         let preferredHeight: Double =
             if let minimumHeight, let maximumHeight {
                 if minimumHeight >= maximumHeight {
-                    max(minimumHeight, childSize.height)
+                    max(minimumHeight, childSize.height.clamped(upTo: maximumHeight))
                 } else {
                     maximumHeight.clamped(upTo: bounds.height)
                 }
