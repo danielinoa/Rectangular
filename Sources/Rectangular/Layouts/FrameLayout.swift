@@ -73,16 +73,11 @@ public struct FrameLayout: Layout {
     }
 
     public func size(fitting items: [any LayoutItem], within bounds: Size) -> Size {
-
-
-
-
         let childProposalWidth = maximumWidth?.clamped(upTo: bounds.width) ?? bounds.width
         let childProposalHeight = maximumHeight?.clamped(upTo: bounds.height) ?? bounds.height
         let childSize = layout.size(
             fitting: items, within: .init(width: childProposalWidth, height: childProposalHeight)
         )
-
         let preferredWidth: Double =
             if let minimumWidth, let maximumWidth {
                 if minimumWidth >= maximumWidth {
@@ -97,7 +92,6 @@ public struct FrameLayout: Layout {
             } else {
                 childSize.width.clamped(upTo: bounds.width)
             }
-
         let preferredHeight: Double =
             if let minimumHeight, let maximumHeight {
                 if minimumHeight >= maximumHeight {
