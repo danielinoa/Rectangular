@@ -9,15 +9,16 @@ public struct FrameLayout: Layout {
     // TODO: Add idealWidth and idealHeight along with SizeProposal enum (value, .zero, .unspecified, and .infinity)
 
     private var layout: ZStackLayout
+
     public var alignment: Alignment {
         get { layout.alignment }
         set { layout.alignment = newValue }
     }
 
-    let minimumWidth: Double?
-    let maximumWidth: Double?
-    let minimumHeight: Double?
-    let maximumHeight: Double?
+    public let minimumWidth: Double?
+    public let maximumWidth: Double?
+    public let minimumHeight: Double?
+    public let maximumHeight: Double?
 
     public init(
         minimumWidth: Double? = nil,
