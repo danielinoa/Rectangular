@@ -3,10 +3,6 @@ import XCTest
 
 final class HStackLayoutTests: XCTestCase {
 
-    private struct Spacer: LayoutItem {
-        func sizeThatFits(_ size: Size) -> Size { size }
-    }
-
     func test_size_with_no_items() {
         let layout = HStackLayout()
         let size = layout.naturalSize(for: [])
