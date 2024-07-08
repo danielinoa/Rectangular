@@ -55,13 +55,13 @@ final class FrameLayoutTests: XCTestCase {
         XCTAssertEqual(size.height, expectedLayoutHeight)
     }
 
-    func test_overflowing_min_width_is_NOT_clamped_up_to_bounds_width() {
+    func test_overflowing_min_width_is_clamped_up_to_bounds_width() {
         let bounds = Size(width: 100, height: 100)
         let item = ResponsiveItem(width: 20)
         let layout = FrameLayout(minimumWidth: .infinity)
         let size = layout.size(fitting: [item], within: bounds)
 
-        let expectedWidth: Double = .infinity // This comes from the layout clamping the width up to the bounds
+        let expectedWidth: Double = 100 // This comes from the layout clamping the width up to the bounds
         let expectedHeight: Double = 1 // This comes from the item's height
 
         XCTAssertEqual(size.width, expectedWidth)
